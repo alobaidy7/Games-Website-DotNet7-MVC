@@ -1,7 +1,14 @@
+using Games_Website_DotNet7_MVC.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var ConntectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("No Connection String Found !");
+
+builder.Services.AddDbContext<ApplicationDbContext> (options=>options.UseSqlServer(ConntectionString));
 
 var app = builder.Build();
 
