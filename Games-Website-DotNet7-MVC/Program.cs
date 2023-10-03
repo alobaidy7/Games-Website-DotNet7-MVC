@@ -1,4 +1,6 @@
 using Games_Website_DotNet7_MVC.Data;
+using Games_Website_DotNet7_MVC.Interfaces;
+using Games_Website_DotNet7_MVC.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,12 @@ builder.Services.AddControllersWithViews();
 var ConntectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("No Connection String Found !");
 
 builder.Services.AddDbContext<ApplicationDbContext> (options=>options.UseSqlServer(ConntectionString));
+
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<IDevicesService, DevicesService>();
+builder.Services.AddScoped<IGamesService, GamesService>();
+
+
 
 var app = builder.Build();
 
